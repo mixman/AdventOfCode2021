@@ -26,18 +26,16 @@ day3_1 = do
     let epsilon = zipWith (\a b -> if a<b then 0 else 1) countZeros countOnes
     pure $ toDecimal gamma * toDecimal epsilon
 
-thru f [] c = error "dead end"
-thru f xs c = if length xs == 1 then head xs else thru f xs' (c+1)
+rating f [] c = error "dead end"
+rating f xs c = if length xs == 1 then head xs
+                else rating f (filter (\x -> x !! c == criteria !! c) xs) (c+1)
     where
         rs = replicate (length $ head xs) 0
-        countZeros = total 0 xs rs
-        countOnes = total 1 xs rs
-        crit = f countZeros countOnes
-        xs' = filter (\x -> x !! c == crit !! c) xs
+        criteria = f (total 0 xs rs) (total 1 xs rs)
 
 mostCommon = zipWith (\a b -> if a>b then 0 else 1)
 leastCommon = zipWith (\a b -> if a>b then 1 else 0)
 
 day3_2 = do
     input <- getInput
-    pure $ toDecimal (thru mostCommon input 0) * toDecimal (thru leastCommon input 0)
+    pure $ toDecimal (rating mostCommon input 0) * toDecimal (rating leastCommon input 0)
