@@ -41,3 +41,15 @@ day4_1 = do
     (nums, boards) <- getInput
     let (r,c,b,m) = head [ rs | rs@(r,c,b,m) <- playBingo nums boards, r || c]
     pure $ sumOfUnmarked m b * last m
+
+day4_2 = do
+    (nums, boards) <- getInput
+    let history = [ (b, m) | rs@(r,c,b,m) <- playBingo nums boards, r || c]
+    let winners xs = go xs [] []
+            where
+                go (win@(b,m):xs) r bs
+                    | b `notElem` bs = go xs (r++[win]) (bs++[b])
+                    | otherwise = go xs r bs
+                go _ r bs = r
+    let (board, marks) = last $ winners history
+    pure $ sumOfUnmarked marks board * last marks
