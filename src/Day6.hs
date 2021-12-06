@@ -24,11 +24,9 @@ solve' m@((k,v):xs) ys = case k of
     0 -> solve' xs (Map.insertWith (+) 6 v $ Map.insertWith (+) 8 v ys)
     _ -> solve' xs (Map.insertWith (+) (k-1) v ys)
 
-day' n t input
-    | n == t    = input
-    | otherwise = day' (n+1) t (solve' (reverse $ Map.assocs input) Map.empty)
+day' n input = foldl (\m d -> solve' (Map.assocs m) Map.empty) input [1..n]
 
 day6_2 = do
     input <- getInput
-    pure $ sum . Map.elems $ day' 0 256 (foldl (\y x -> Map.insertWith (+) x 1 y) Map.empty input)
+    pure $ sum . Map.elems $ day' 256 (foldl (\y x -> Map.insertWith (+) x 1 y) Map.empty input)
 
