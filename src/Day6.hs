@@ -19,9 +19,6 @@ day n t input
 
 day6_1 = do length . day 0 80 <$> getInput
 
-prepare [] ys = ys
-prepare (x:xs) ys = prepare xs (Map.insertWith (+) x 1 ys)
-
 solve' [] ys           = ys
 solve' m@((k,v):xs) ys = case k of
     0 -> solve' xs (Map.insertWith (+) 6 v $ Map.insertWith (+) 8 v ys)
@@ -33,5 +30,5 @@ day' n t input
 
 day6_2 = do
     input <- getInput
-    pure $ day' 0 256 (prepare input Map.empty)
+    pure $ sum . Map.elems $ day' 0 256 (foldl (\y x -> Map.insertWith (+) x 1 y) Map.empty input)
 
