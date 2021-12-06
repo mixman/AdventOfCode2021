@@ -8,6 +8,7 @@ library
     build-depends:    base ^>=4.14.3.0
         , containers
         , lens
+        , parsec
         , text
         , vector
     hs-source-dirs:   src
