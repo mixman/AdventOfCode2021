@@ -23,9 +23,9 @@ update rs (x,y) = Map.insertWith (+) (x,y) 1 rs
 day5_1 = do
     input <- getInput
     let points = concat [ coords x1 x2 y1 y2 | [[x1,y1],[x2,y2]] <- input, x1==x2 || y1 == y2 ]
-    pure $ length . filter (>1) . Map.elems $ foldl update Map.empty points
+    pure $ length . filter (>1) . Map.elems $ foldl update Map.empty points
 
 day5_2 = do
     input <- getInput
     let points = concat [ coords x1 x2 y1 y2 | [[x1,y1],[x2,y2]] <- input ]
-    pure $ length . filter (>1) . Map.elems $ foldl update Map.empty points
+    pure $ length . filter (>1) . Map.elems $ foldl update Map.empty points
