@@ -13,7 +13,7 @@ getInput = do
     pure $ splitOn "-" <$> input
 
 plotCave input = [ (node, paths node input) | node <- nub . concat $ input]
-paths node input = if node == "end" then [] else left ++ right
+paths node input = if node == "end" then [] else left ++ right
     where
         left = map (!!1) $ filter (\x -> head x == node) input
         right = map (!!0) $ filter (\x -> last x == node) input
